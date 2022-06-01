@@ -95,52 +95,59 @@ class MyWalletPage extends StatelessWidget {
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemCount: dataIncomeWallets.length,
-            itemBuilder: (context, index) => item(dataIncomeWallets[index])),
+            itemBuilder: (context, index) =>
+                item(context, dataIncomeWallets[index])),
       );
 
-  item(IncomeWalletModel item) => Container(
-        margin: const EdgeInsets.all(8),
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(4))),
-        width: 150,
-        child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircularPercentIndicator(
-                radius: 20.0,
-                lineWidth: 6.0,
-                percent: item.persent!,
-                center: Text(
-                  "${item.persent! * 100}",
-                  style: const TextStyle(color: Colors.black, fontSize: 10),
+  item(BuildContext context, IncomeWalletModel item) => GestureDetector(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const DashboardPage()),
+        ),
+        child: Container(
+          margin: const EdgeInsets.all(8),
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(4))),
+          width: 150,
+          child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularPercentIndicator(
+                  radius: 20.0,
+                  lineWidth: 6.0,
+                  percent: item.persent!,
+                  center: Text(
+                    "${item.persent! * 100}",
+                    style: const TextStyle(color: Colors.black, fontSize: 10),
+                  ),
+                  progressColor:
+                      item.persent == 0.75 ? Colors.red : Colors.purple,
                 ),
-                progressColor:
-                    item.persent == 0.75 ? Colors.red : Colors.purple,
               ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  item.title ?? "",
-                  style: const TextStyle(color: Colors.black54, fontSize: 12),
-                ),
-                Text(
-                  item.balances ?? "",
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          )
-        ]),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    item.title ?? "",
+                    style: const TextStyle(color: Colors.black54, fontSize: 12),
+                  ),
+                  Text(
+                    item.balances ?? "",
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            )
+          ]),
+        ),
       );
 
   transactionsView() => Container(
